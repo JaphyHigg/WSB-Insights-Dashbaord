@@ -1,4 +1,4 @@
-# WSB-Insights-Dashboard
+# Wall Street Bets Insights Dashboard
 
 **Ideas for this project:**   
 - gets WSB top sentiment API ticker symbols  
@@ -21,6 +21,7 @@
 - https://finnhub.io/docs/api/introduction  
 - https://www.marketaux.com/documentation  
 - https://site.financialmodelingprep.com/developer/docs  
+- https://github.com/Real-time-finance/finance-websocket-API/
 
 
 
