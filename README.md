@@ -14,7 +14,7 @@
 - shows what $n invested one month(and/or week) ago would be worth today  
 - show some sort of options interest?  
 - show volume  
-- GUI  
+- GUI (PyQt or PySimpleGUI)  
 - charts  
 
 
