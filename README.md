@@ -11,3 +11,16 @@
 - also show some sort of options interest?  
 - also show volume?  
 
+
+**WSB API**  
+- https://tradestie.com/apps/reddit/api/  
+
+
+**API's being considered for stock prices etc**  
+- https://www.alphavantage.co/  
+- https://finnhub.io/docs/api/introduction  
+- https://www.marketaux.com/documentation  
+- https://site.financialmodelingprep.com/developer/docs  
+
+
+
