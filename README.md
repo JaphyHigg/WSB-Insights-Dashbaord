@@ -18,11 +18,10 @@
 - charts  
 
 
-**WSB API**  
-- https://tradestie.com/apps/reddit/api/  
-
-
-**APIs being considered for stock prices etc**  
-- https://www.marketaux.com/documentation  
-  * For news
-- https://site.financialmodelingprep.com/developer/docs  
+**APIs Being Used**  
+- Wall Street Bets API  
+  * https://tradestie.com/apps/reddit/api/  
+- MarketAux API (For news)  
+  * https://www.marketaux.com/documentation  
+- Financial Modeling Prep (For stock info)  
+  * https://site.financialmodelingprep.com/developer/docs  
