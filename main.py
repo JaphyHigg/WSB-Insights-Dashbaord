@@ -7,7 +7,6 @@ def main(n_stocks = 1):
     top_stocks = wsb(n_stocks)
     view_data(update_top_stocks(top_stocks))
     menu()
-    #get_news()
     ...
 
 
@@ -48,12 +47,15 @@ def menu():
     print("Would you like:")
     print("1. More info on a ticker")
     print("2. Increase the number of tickers")
-    first_choice = input(":").strip().lower()
-    if first_choice[0] == "1" or first_choice[0] == "m":
+    print("3. Exit program")
+    choice = input(":").strip().lower()
+    if choice[0] == "1" or choice[0] == "m":
         ticker_input = input("Which ticker would you like more info on?: ").strip().lower()
         check_stock(ticker_input)
-    elif first_choice[0] == "2" or first_choice[0] == "i":
+    elif choice[0] == "2" or choice[0] == "i":
         main(num_of_stocks())
+    elif choice[0] == "3" or choice[0] == "e":
+        sys.exit()
     else:
         print("Invalid choice. Please choose option 1 or 2.")
         menu()
@@ -65,7 +67,6 @@ def check_stock(ticker):
     fmp_key = os.environ.get("FMP_API_KEY")
     fmp = FMP(api_key=fmp_key)
     quote = fmp.get_quote(ticker)
-    print(quote)
     ticker_info0 = [[quote[0]["symbol"], quote[0]["name"], ("$" + str(quote[0]["price"])), 
                     ("$" + str("{:,}".format(quote[0]["marketCap"])))]] 
     ticker_info1 = [[("$" + str(quote[0]["open"])), ("$" + str(quote[0]["previousClose"])),
@@ -86,18 +87,24 @@ def check_stock(ticker):
     response_json = response.json()
     print(response_json[0]["description"])
     print()
-    ...
+    print()
+    get_news(ticker)
+    menu()
 
 
 #get news mentioning ticker
-def get_news():
-    ticker = "NVDA" #placeholder
+def get_news(ticker):
     marketaux_key = os.environ.get("MARKETAUX_API_KEY")
     url = f"https://api.marketaux.com/v1/news/all?symbols={ticker}&filter_entities=true&api_token={marketaux_key}"
     response = requests.get(url)
     response_json = response.json()
-    print(json.dumps(response_json, indent=2))
-    ...
+    print(f"Articles mentioning {ticker.upper()}")
+    print("-")
+    for i in range(3):
+        print("Title:", response_json["data"][i]["title"])
+        print("Description:", response_json["data"][i]["description"])
+        print(response_json["data"][i]["url"])
+        print()
 
 
 #get number of stocks user wants to view, return n_stocks int
