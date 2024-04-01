@@ -1,0 +1,3 @@
+requests==2.31.0
+fmp-python==0.1.4
+tabulate==0.9.0

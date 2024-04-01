@@ -3,7 +3,7 @@ from tabulate import tabulate
 from fmp_python.fmp import FMP
 
 
-def main(n_stocks = 1):
+def main(n_stocks = 5):
     top_stocks = wsb(n_stocks)
     view_data(update_top_stocks(top_stocks))
     menu()
@@ -30,7 +30,7 @@ def update_top_stocks(top_stocks):
     fmp = FMP(api_key=fmp_key)
     for index in range(len(top_stocks)):
         info = fmp.get_quote(top_stocks[index][0])
-        price = "$" + str(info[0]["price"])
+        price = "$" + str(round(info[0]["price"], 2))
         top_stocks[index].append(price)
     return top_stocks
 
@@ -67,12 +67,12 @@ def check_stock(ticker):
     fmp_key = os.environ.get("FMP_API_KEY")
     fmp = FMP(api_key=fmp_key)
     quote = fmp.get_quote(ticker)
-    ticker_info0 = [[quote[0]["symbol"], quote[0]["name"], ("$" + str(quote[0]["price"])), 
+    ticker_info0 = [[quote[0]["symbol"], quote[0]["name"], ("$" + str(round(quote[0]["price"], 2))), 
                     ("$" + str("{:,}".format(quote[0]["marketCap"])))]] 
     ticker_info1 = [[("$" + str(quote[0]["open"])), ("$" + str(quote[0]["previousClose"])),
         "{:,}".format(quote[0]["volume"]), "{:,}".format(quote[0]["avgVolume"])]]
     ticker_info2 = [[("$" + str(quote[0]["yearHigh"])), ("$" + str(quote[0]["yearLow"])),
-                     ("$" + str(quote[0]["priceAvg50"])), ("$" + str(quote[0]["priceAvg50"]))]] 
+                     ("$" + str(round(quote[0]["priceAvg50"], 2))), ("$" + str(round(quote[0]["priceAvg50"], 2)))]] 
     headers0 = ["Ticker", "Name", "Price", "Market Cap"]
     table0 = tabulate(ticker_info0, headers=headers0, tablefmt="fancy_grid")
     print(table0)
@@ -85,10 +85,12 @@ def check_stock(ticker):
     url = f"https://financialmodelingprep.com/api/v3/profile/{ticker}?apikey={fmp_key}"
     response = requests.get(url)
     response_json = response.json()
+    print()
     print(response_json[0]["description"])
     print()
     print()
     get_news(ticker)
+    print("---")
     menu()
 
 
@@ -101,8 +103,8 @@ def get_news(ticker):
     print(f"Articles mentioning {ticker.upper()}")
     print("-")
     for i in range(3):
-        print("Title:", response_json["data"][i]["title"])
-        print("Description:", response_json["data"][i]["description"])
+        print(response_json["data"][i]["title"])
+        print(response_json["data"][i]["description"])
         print(response_json["data"][i]["url"])
         print()
 
