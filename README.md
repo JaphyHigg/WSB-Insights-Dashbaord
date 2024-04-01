@@ -7,27 +7,25 @@ This program grabs top mentioned tickers from the Wall Street Bets subreddit usi
 2. Get free API keys for [Financial Modeling Prep](https://site.financialmodelingprep.com/) and [MarketAUX](https://www.marketaux.com/register)  
 3. Navigate to project directory  
 4. Install dependencies (ex: pip install -r requirements.txt)  
-5. Either:  
+5. Either:
   - A. Put your keys on your local system so they can be accessed by:  
     - fmp_key = os.environ.get("FMP_API_KEY")
     - marketaux_key = os.environ.get("MARKETAUX_API_KEY")  
-  - B. Edit main.py and put your keys directly in the code  
+  - B. Edit main.py and put your keys directly in the code
 6. Run main.py  
 
 
 ## Minimum Viable Product:  
 - gets WSB top sentiment API ticker symbols, display number of comments that mention it and if they are bullish/bearish  
 - gets current stock price for each ticker (using a TDB stock market API)  
-- show ticker market cap, other info about the company (founded date, industry, etc)  
+- show ticker market cap, other info about the company 
 - get top news stories (from a news API) related to each ticker and offers them  
 
 
 ## Additional ideas for this project:   
-- - gets stock price for 1 month(and/or week?) ago, gives difference between current and 1 mon(and/or week) ago  
-- use openai api to get a short description of the company  
+- gets stock price for 1 month(and/or week?) ago, gives difference between current and 1 mon(and/or week) ago  
 - shows what $n invested one month(and/or week) ago would be worth today  
 - show some sort of options interest?  
-- show volume  
 - GUI (PyQt or PySimpleGUI)  
 - charts  
 
