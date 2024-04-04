@@ -1,4 +1,4 @@
-import requests, sys, os, json
+import requests, sys, os
 from tabulate import tabulate
 from fmp_python.fmp import FMP
 
@@ -13,15 +13,18 @@ def main(n_stocks = 5):
 #get data from WSB API, make a list out of each of the tickers from that data,
 #append those lists to top_stocks list, return top_stocks list
 def wsb(n_stocks):
-    top_stocks = []
-    response = requests.get("https://tradestie.com/api/v1/apps/reddit")
-    if response.status_code == 200:
-        wsb_data = response.json()
-        for i in wsb_data[:n_stocks]:
-            top_stocks.append([i['ticker'], i['no_of_comments'], i['sentiment']])
-        return top_stocks
+    if n_stocks > 50 or n_stocks <= 0:
+        sys.exit("Invalid number of stocks")
     else:
-        sys.exit("Error getting WSB API data")
+        top_stocks = []
+        response = requests.get("https://tradestie.com/api/v1/apps/reddit")
+        if response.status_code == 200:
+            wsb_data = response.json()
+            for i in wsb_data[:n_stocks]:
+                top_stocks.append([i['ticker'], i['no_of_comments'], i['sentiment']])
+            return top_stocks
+        else:
+            sys.exit("Error getting WSB API data")
 
 
 #add price to top_stocks list
@@ -33,7 +36,6 @@ def update_top_stocks(top_stocks):
         price = "$" + str(round(info[0]["price"], 2))
         top_stocks[index].append(price)
     return top_stocks
-
 
 
 #display the WSB API data in a nice table
@@ -51,19 +53,23 @@ def menu():
     choice = input(":").strip().lower()
     if choice[0] == "1" or choice[0] == "m":
         ticker_input = input("Which ticker would you like more info on?: ").strip().lower()
-        check_stock(ticker_input)
+        try:
+            check_stock(ticker_input)
+        except IndexError or ValueError:
+            print()
+            print("Invalid ticker")
+            print()
+            menu()
     elif choice[0] == "2" or choice[0] == "i":
         main(num_of_stocks())
     elif choice[0] == "3" or choice[0] == "e":
         sys.exit()
     else:
-        print("Invalid choice. Please choose option 1 or 2.")
-        menu()
+        sys.exit("Invalid choice. Exiting program.")
 
 
 #get more info about company and stock price, as well as a company description
 def check_stock(ticker):
-    print()
     fmp_key = os.environ.get("FMP_API_KEY")
     fmp = FMP(api_key=fmp_key)
     quote = fmp.get_quote(ticker)
@@ -75,6 +81,7 @@ def check_stock(ticker):
                      ("$" + str(round(quote[0]["priceAvg50"], 2))), ("$" + str(round(quote[0]["priceAvg50"], 2)))]] 
     headers0 = ["Ticker", "Name", "Price", "Market Cap"]
     table0 = tabulate(ticker_info0, headers=headers0, tablefmt="fancy_grid")
+    print()
     print(table0)
     headers1 = ["Open", "Previous Close", "Volume", "Avg Volume"]
     table1 = tabulate(ticker_info1, headers=headers1, tablefmt="fancy_grid")
@@ -100,7 +107,7 @@ def get_news(ticker):
     url = f"https://api.marketaux.com/v1/news/all?symbols={ticker}&filter_entities=true&api_token={marketaux_key}"
     response = requests.get(url)
     response_json = response.json()
-    print(f"Articles mentioning {ticker.upper()}")
+    print(f"Recent articles mentioning {ticker.upper()}")
     print("-")
     for i in range(3):
         print(response_json["data"][i]["title"])
