@@ -13,18 +13,15 @@ def main(n_stocks = 5):
 #get data from WSB API, make a list out of each of the tickers from that data,
 #append those lists to top_stocks list, return top_stocks list
 def wsb(n_stocks):
-    if n_stocks > 50 or n_stocks <= 0:
-        sys.exit("Invalid number of stocks")
+    top_stocks = []
+    response = requests.get("https://tradestie.com/api/v1/apps/reddit")
+    if response.status_code == 200:
+        wsb_data = response.json()
+        for i in wsb_data[:n_stocks]:
+            top_stocks.append([i['ticker'], i['no_of_comments'], i['sentiment']])
+        return top_stocks
     else:
-        top_stocks = []
-        response = requests.get("https://tradestie.com/api/v1/apps/reddit")
-        if response.status_code == 200:
-            wsb_data = response.json()
-            for i in wsb_data[:n_stocks]:
-                top_stocks.append([i['ticker'], i['no_of_comments'], i['sentiment']])
-            return top_stocks
-        else:
-            sys.exit("Error getting WSB API data")
+        sys.exit("Error getting WSB API data")
 
 
 #add price to top_stocks list
