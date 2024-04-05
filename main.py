@@ -101,7 +101,7 @@ def check_stock(ticker):
 #get news mentioning ticker
 def get_news(ticker):
     marketaux_key = os.environ.get("MARKETAUX_API_KEY")
-    url = f"https://api.marketaux.com/v1/news/all?symbols={ticker}&filter_entities=true&api_token={marketaux_key}"
+    url = f"https://api.marketaux.com/v1/news/all?symbols={ticker}&language=en&filter_entities=true&api_token={marketaux_key}"
     response = requests.get(url)
     response_json = response.json()
     print(f"Recent articles mentioning {ticker.upper()}")
