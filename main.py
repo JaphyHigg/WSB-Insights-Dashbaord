@@ -7,7 +7,6 @@ def main(n_stocks = 10):
     top_stocks = wsb(n_stocks)
     view_data(update_top_stocks(top_stocks))
     menu()
-    ...
 
 
 #get data from WSB API, make a list out of each of the tickers from that data,
