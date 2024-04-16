@@ -3,7 +3,7 @@ from tabulate import tabulate
 from fmp_python.fmp import FMP
 
 
-def main(n_stocks = 5):
+def main(n_stocks = 10):
     top_stocks = wsb(n_stocks)
     view_data(update_top_stocks(top_stocks))
     menu()
